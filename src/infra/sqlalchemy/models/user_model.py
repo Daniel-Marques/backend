@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String
-from src.infra.sqlalchemy.config.database import Base
+from datetime import datetime, time, timezone
+from sqlalchemy import Column, Integer, String, DateTime
+from src.infra.sqlalchemy.config.database import Base, create_db
 
 class User(Base):
 
@@ -18,3 +19,5 @@ class User(Base):
     city = Column(String)
     state = Column(String)
     country = Column(String)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime(timezone=True))

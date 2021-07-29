@@ -15,3 +15,5 @@ class User(BaseModel):
     city: str
     state: str
     country: str
+    created_at: str
+    updated_at: str
