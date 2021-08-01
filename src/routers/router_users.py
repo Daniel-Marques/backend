@@ -27,8 +27,8 @@ def update(id: int, user: UserSchema, db: Session = Depends(get_db)):
 
 @router.get('/users/{user_id}', tags=["Users"])
 def show(user_id: int, db: Session = Depends(get_db)):
-    user = UserRepository(db).show(user_id)
-    return user
+    user_found = UserRepository(db).show(user_id)
+    return user_found
 
 
 @router.delete('/users/{user_id}', tags=["Users"])

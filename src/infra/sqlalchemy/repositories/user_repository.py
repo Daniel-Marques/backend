@@ -10,7 +10,6 @@ class UserRepository():
     def index(self):
         stmt = select(UserModel)
         users = self.db.execute(stmt).scalars().all()
-
         return users
 
     def create(self, user: UserSchema):
@@ -31,7 +30,6 @@ class UserRepository():
         self.db.add(db_user)
         self.db.commit()
         self.db.refresh(db_user)
-
         return db_user
 
     def update(self, id: int, user: UserSchema):
@@ -51,18 +49,15 @@ class UserRepository():
         )
         self.db.execute(stmt)
         self.db.commit()
-
         return {'message': 'Usuário atualizado com sucesso.'}
 
     def show(self, user_id: int):
-        stmt = select(UserModel).filter_by(id=user_id)
-        user = self.db.execute(stmt).scalars().one()
-
+        stmt = select(UserModel).where(UserModel.id == user_id)
+        user = self.db.execute(stmt).scalars().first()
         return user
 
     def destroy(self, user_id: int):
         stmt = delete(UserModel).where(UserModel.id == user_id)
         self.db.execute(stmt)
         self.db.commit()
-
         return {'message': 'Usuário deletado com sucesso.'}
