@@ -1,19 +1,19 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class User(BaseModel):
+class UserSchema(BaseModel):
     id: Optional[str]
     name: str
+    document: str
+    pis: str
     email: str
-    document: int
-    pis: int
     password: str
     zipcode: int
     address: str
-    number: int
-    complement: str
+    number: Optional[int]
+    complement: Optional[str]
     city: str
     state: str
     country: str
-    created_at: str
-    updated_at: str
+    created_at: Optional[str]
+    updated_at: Optional[str]
