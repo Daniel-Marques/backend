@@ -6,6 +6,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
+    "https://front-newmission.herokuapp.com"
 ]
 
 app.add_middleware(
