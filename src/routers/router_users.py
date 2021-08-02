@@ -7,9 +7,17 @@ from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 
 router = APIRouter()
 
+
 @router.get('/')
 async def welcome():
-    return 'API Rest em Python para desafio PontoTel'
+    return {'message': {
+        'description': 'API Rest em Python para desafio PontoTel',
+        'author': {
+            'name': 'Daniel Marques',
+            'email': 'daniel.silva.city@gmail.com'
+        }
+    }}
+
 
 @router.get('/users', status_code=status.HTTP_200_OK, tags=["Users"])
 async def index(db: Session = Depends(get_db)):
@@ -34,7 +42,8 @@ async def show(user_id: int, db: Session = Depends(get_db)):
         user_found = UserRepository(db).show(user_id)
         return user_found
     except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
 
 
 @router.delete('/users/{user_id}', tags=["Users"])
