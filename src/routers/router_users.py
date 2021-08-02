@@ -7,6 +7,9 @@ from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 
 router = APIRouter()
 
+@router.get('/')
+async def welcome():
+    return 'API Rest em Python para desafio PontoTel'
 
 @router.get('/users', status_code=status.HTTP_200_OK, tags=["Users"])
 async def index(db: Session = Depends(get_db)):
