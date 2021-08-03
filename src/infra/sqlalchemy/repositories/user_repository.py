@@ -62,9 +62,9 @@ class UserRepository():
         stmt = select(UserModel).where(UserModel.document == document)
         user = self.db.execute(stmt).scalars().first()
         if(user):
-            return True
+            return user
         else:
-            return False
+            return []
 
     def destroy(self, user_id: int):
         stmt = delete(UserModel).where(UserModel.id == user_id)
