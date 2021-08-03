@@ -46,6 +46,15 @@ async def show(user_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
 
 
+@router.get('/users/{document}', tags=["Users"])
+async def searchDocument(document: int, db: Session = Depends(get_db)):
+    user_found = UserRepository(db).searchDocument(document)
+    if(user_found):
+        return True
+    else:
+        return False
+
+
 @router.delete('/users/{user_id}', tags=["Users"])
 async def destroy(user_id: int, db: Session = Depends(get_db)):
     UserRepository(db).destroy(user_id)

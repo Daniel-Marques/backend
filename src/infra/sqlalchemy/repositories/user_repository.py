@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from src.schemas.schema import UserSchema
 from src.infra.sqlalchemy.models.user_model import UserModel
 
+
 class UserRepository():
     def __init__(self, db: Session):
         self.db = db
@@ -53,6 +54,11 @@ class UserRepository():
 
     def show(self, user_id: int):
         stmt = select(UserModel).where(UserModel.id == user_id)
+        user = self.db.execute(stmt).scalars().first()
+        return user
+
+    def searchDocument(self, document: int):
+        stmt = select(UserModel).where(UserModel.document == document)
         user = self.db.execute(stmt).scalars().first()
         return user
 
