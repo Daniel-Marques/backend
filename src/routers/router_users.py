@@ -51,6 +51,11 @@ async def searchDocument(document: str, db: Session = Depends(get_db)):
     user_found = UserRepository(db).searchDocument(document)
     return user_found
 
+@router.get('/users/email/{email}', tags=["Users"])
+async def searchEmail(email: str, db: Session = Depends(get_db)):
+    user_found = UserRepository(db).searchEmail(email)
+    return user_found
+
 
 @router.delete('/users/{user_id}', tags=["Users"])
 async def destroy(user_id: int, db: Session = Depends(get_db)):
