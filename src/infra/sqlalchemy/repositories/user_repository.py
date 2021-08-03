@@ -1,5 +1,6 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import true
 from src.schemas.schema import UserSchema
 from src.infra.sqlalchemy.models.user_model import UserModel
 
@@ -57,10 +58,13 @@ class UserRepository():
         user = self.db.execute(stmt).scalars().first()
         return user
 
-    def searchDocument(self, document: int):
+    def searchDocument(self, document: str):
         stmt = select(UserModel).where(UserModel.document == document)
         user = self.db.execute(stmt).scalars().first()
-        return user
+        if(user):
+            return True
+        else:
+            return False
 
     def destroy(self, user_id: int):
         stmt = delete(UserModel).where(UserModel.id == user_id)

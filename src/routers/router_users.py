@@ -47,12 +47,9 @@ async def show(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.get('/users/document/{document}', tags=["Users"])
-async def searchDocument(document: int, db: Session = Depends(get_db)):
+async def searchDocument(document: str, db: Session = Depends(get_db)):
     user_found = UserRepository(db).searchDocument(document)
-    if(user_found):
-        return True
-    else:
-        return False
+    return user_found
 
 
 @router.delete('/users/{user_id}', tags=["Users"])
