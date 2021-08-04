@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
-from src.schemas.schema import LoginSchema
+from src.schemas.schema import LoginSchema, LoginSuccessSchema
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import hash_provider, token_provider
 
@@ -9,7 +9,7 @@ from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 router = APIRouter()
 
 
-@router.post('/token', response_model=LoginSchema)
+@router.post('/token', response_model=LoginSuccessSchema)
 def login(login: LoginSchema, session: Session = Depends(get_db)):
     email = login.email
     passwd = login.password
