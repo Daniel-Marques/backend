@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
 from src.schemas.schema import UserSchema
 from src.infra.sqlalchemy.config.database import get_db
+from src.infra.providers import hash_provider
 
 from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 
@@ -26,6 +27,10 @@ async def index(db: Session = Depends(get_db)):
 
 @router.post('/users', tags=["Users"])
 async def create(user: UserSchema, db: Session = Depends(get_db)):
+    # Verify has user by phone
+
+    # Create new user
+    user.password = hash_provider.create_hash(user.password)
     user_created = UserRepository(db).create(user)
     return user_created
 
@@ -50,6 +55,7 @@ async def show(user_id: int, db: Session = Depends(get_db)):
 async def searchDocument(document: str, db: Session = Depends(get_db)):
     user_found = UserRepository(db).searchDocument(document)
     return user_found
+
 
 @router.get('/users/email/{email}', tags=["Users"])
 async def searchEmail(email: str, db: Session = Depends(get_db)):

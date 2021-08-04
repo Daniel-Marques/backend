@@ -66,13 +66,10 @@ class UserRepository():
         else:
             return False
 
-    def searchEmail(self, email: str):
+    def searchEmail(self, email: str) -> UserModel:
         stmt = select(UserModel).where(UserModel.email == email)
         user = self.db.execute(stmt).scalars().first()
-        if(user):
-            return True
-        else:
-            return False
+        return user
 
     def destroy(self, user_id: int):
         stmt = delete(UserModel).where(UserModel.id == user_id)
