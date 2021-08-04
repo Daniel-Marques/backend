@@ -19,13 +19,11 @@ class UserSchema(BaseModel):
     created_at: Optional[str]
     updated_at: Optional[str]
 
+
 class UserSimpleSchema(BaseModel):
     id: Optional[int] = None
     name: str
     email: str
-
-    class Config:
-        orm_mode = True
 
 
 class LoginSchema(BaseModel):
