@@ -26,4 +26,4 @@ def login(login: LoginSchema, session: Session = Depends(get_db)):
 
     # Gererate Token JWT
     token = token_provider.create_access_token({'sub': user.email})
-    return {'user': user, 'access_token': token}
+    return LoginSuccessSchema(user=user, access_token=token)

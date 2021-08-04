@@ -25,6 +25,9 @@ class UserSimpleSchema(BaseModel):
     name: str
     email: str
 
+    class Config:
+        orm_mode = True
+
 
 class LoginSchema(BaseModel):
     email: str
