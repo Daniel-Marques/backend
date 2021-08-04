@@ -9,7 +9,7 @@ from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 router = APIRouter()
 
 
-@router.post('/token', response_model=LoginSuccessSchema)
+@router.post('/token')
 def login(login: LoginSchema, session: Session = Depends(get_db)):
     email = login.email
     passwd = login.password
