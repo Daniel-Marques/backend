@@ -6,7 +6,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
-    "https://front-newmission.herokuapp.com"
+    "https://front-newmission.herokuapp.com",
+    "http://front-newmission.herokuapp.com/users"
 ]
 
 app.add_middleware(
