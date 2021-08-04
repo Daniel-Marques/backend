@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
 from src.schemas.schema import LoginSchema
 from src.infra.sqlalchemy.config.database import get_db
-from src.infra.providers import hash_provider
+from src.infra.providers import hash_provider, token_provider
 
 from src.infra.sqlalchemy.repositories.user_repository import UserRepository
 
@@ -24,4 +24,6 @@ def login(login: LoginSchema, session: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="A senha está incorreta")
 
-    return user
+    # Gererate Token JWT
+    token = token_provider.create_access_token({'sub': user.email})
+    return {'user': user, 'access_token': token}
