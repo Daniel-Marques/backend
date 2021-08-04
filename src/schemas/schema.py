@@ -17,3 +17,7 @@ class UserSchema(BaseModel):
     country: str
     created_at: Optional[str]
     updated_at: Optional[str]
+
+class LoginSchema(BaseModel):
+    email: str
+    password: str
