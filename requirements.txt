@@ -5,7 +5,9 @@ async-exit-stack==1.0.1
 async-generator==1.10
 autopep8==1.5.7
 backports.entry-points-selectable==1.1.0
+bcrypt==3.2.0
 certifi==2021.5.30
+cffi==1.14.6
 charset-normalizer==2.0.3
 click==7.1.2
 distlib==0.3.2
@@ -26,11 +28,13 @@ Jinja2==2.11.3
 Mako==1.1.4
 MarkupSafe==2.0.1
 orjson==3.6.0
+passlib==1.7.4
 peppercorn==0.6
 pipenv==2021.5.29
 platformdirs==2.2.0
 promise==2.3
 pycodestyle==2.7.0
+pycparser==2.20
 pydantic==1.8.2
 python-dateutil==2.8.2
 python-dotenv==0.19.0
