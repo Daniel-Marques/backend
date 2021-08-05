@@ -83,7 +83,7 @@ class UserRepository():
         )
         self.db.execute(stmt)
         self.db.commit()
-        return {'message': 'Usuário atualizado com sucesso.'}
+        return user
 
     def show(self, user_id: int):
         stmt = select(
