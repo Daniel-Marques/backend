@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["https://front-newmission.herokuapp.com", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
