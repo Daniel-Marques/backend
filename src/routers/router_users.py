@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
 from src.infra.sqlalchemy.models.user_model import UserModel
 from src.routers.utils.auth import get_user_loggedin
-from src.schemas.schema import UserSchema
+from src.schemas.schema import UserSchema, UserWithoutPasswordSchema
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import hash_provider
 
@@ -38,7 +38,13 @@ async def create(user: UserSchema, db: Session = Depends(get_db), userAuth: User
 
 
 @router.put('/users/{id}', tags=["Users"])
-async def update(id: int, user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
+async def update(id: int, user: UserWithoutPasswordSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
+    user_search = UserRepository(db).show(id)
+
+    if(user.password is None):
+        user.password = user_search.password
+    else:
+        user.password = hash_provider.create_hash(user.password)
     user_updated = UserRepository(db).update(id, user)
     return user
 
