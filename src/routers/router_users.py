@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
 from src.infra.sqlalchemy.models.user_model import UserModel
@@ -22,9 +23,10 @@ async def welcome():
     }}
 
 
-@router.get('/users', status_code=status.HTTP_200_OK, tags=["Users"])
+@router.get('/users', tags=["Users"])
 async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
-    return UserRepository(db).index()
+    user_list = UserRepository(db).index()
+    return user_list
 
 
 @router.post('/users', tags=["Users"])

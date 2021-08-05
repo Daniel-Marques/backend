@@ -10,8 +10,22 @@ class UserRepository():
         self.db = db
 
     def index(self):
-        stmt = select(UserModel)
-        users = self.db.execute(stmt).scalars().all()
+        stmt = select(
+            UserModel.id,
+            UserModel.email,
+            UserModel.pis,
+            UserModel.zipcode,
+            UserModel.number,
+            UserModel.city,
+            UserModel.country,
+            UserModel.updated_at,
+            UserModel.name,
+            UserModel.document,
+            UserModel.address,
+            UserModel.complement,
+            UserModel.state,
+            UserModel.created_at)
+        users = self.db.execute(stmt).all()
         return users
 
     def create(self, user: UserSchema):

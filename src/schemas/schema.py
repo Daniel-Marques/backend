@@ -8,7 +8,7 @@ class UserSchema(BaseModel):
     document: str
     pis: str
     email: str
-    password: str
+    password: Optional[str]
     zipcode: int
     address: str
     number: Optional[int]
@@ -19,7 +19,25 @@ class UserSchema(BaseModel):
     created_at: Optional[str]
     updated_at: Optional[str]
 
+
 class UserWithoutPasswordSchema(BaseModel):
+    id: Optional[str]
+    name: str
+    document: str
+    pis: str
+    email: str
+    password: Optional[str]
+    zipcode: int
+    address: str
+    number: Optional[int]
+    complement: Optional[str]
+    city: str
+    state: str
+    country: str
+    created_at: Optional[str]
+    updated_at: Optional[str]
+
+class UserOut(BaseModel):
     id: Optional[str]
     name: str
     document: str
@@ -49,8 +67,6 @@ class UserSimpleSchema(BaseModel):
 class LoginSchema(BaseModel):
     email: str
     password: str
-
-
 
 
 class LoginSuccessSchema(BaseModel):
