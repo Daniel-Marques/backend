@@ -4,7 +4,7 @@ from jose import jwt
 # CONFIG
 SECRET_KEY = 'a3bf1113af136ad54847a795b2175108'
 ALGORITHM = 'HS256'
-EXPIRES_IN_MIN = 3000
+EXPIRES_IN_MIN = 24 * 60 * 60 * 1000
 
 
 def create_access_token(data: dict):
