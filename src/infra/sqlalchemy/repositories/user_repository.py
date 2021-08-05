@@ -46,7 +46,25 @@ class UserRepository():
         self.db.add(db_user)
         self.db.commit()
         self.db.refresh(db_user)
-        return db_user
+
+        # Send hide pass
+        stmt = select(
+            UserModel.id,
+            UserModel.email,
+            UserModel.pis,
+            UserModel.zipcode,
+            UserModel.number,
+            UserModel.city,
+            UserModel.country,
+            UserModel.updated_at,
+            UserModel.name,
+            UserModel.document,
+            UserModel.address,
+            UserModel.complement,
+            UserModel.state,
+            UserModel.created_at).where(UserModel.id == db_user.id)
+        user = self.db.execute(stmt).first()
+        return user
 
     def update(self, id: int, user: UserSchema):
         stmt = update(UserModel).where(UserModel.id == id).values(
