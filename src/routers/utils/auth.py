@@ -14,14 +14,14 @@ def get_user_loggedin(token: str = Depends(oauth2_schema), session: Session = De
     exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED, detail='Token inválido')
     try:
-        phone = token_provider.verify_access_token(token)
+        email = token_provider.verify_access_token(token)
     except JWTError:
         raise exception
 
-    if not phone:
+    if not email:
         raise exception
 
-    user = UserRepository(session).get_by_phone(phone)
+    user = UserRepository(session).searchEmail(email)
 
     if not user:
         raise exception

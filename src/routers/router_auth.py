@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
-from src.schemas.schema import LoginSchema, LoginSuccessSchema
+from src.infra.sqlalchemy.models.user_model import UserModel
+from src.routers.utils.auth import get_user_loggedin
+from src.schemas.schema import LoginSchema, LoginSuccessSchema, UserSimpleSchema
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import hash_provider, token_provider
 
@@ -27,3 +29,8 @@ def login(login: LoginSchema, session: Session = Depends(get_db)):
     # Gererate Token JWT
     token = token_provider.create_access_token({'sub': user.email})
     return LoginSuccessSchema(user=user, access_token=token)
+
+
+@router.get('/me')
+def me(user: UserModel = Depends(get_user_loggedin)):
+    return user

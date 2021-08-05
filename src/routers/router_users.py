@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm.session import Session
+from src.infra.sqlalchemy.models.user_model import UserModel
+from src.routers.utils.auth import get_user_loggedin
 from src.schemas.schema import UserSchema
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import hash_provider
@@ -21,12 +23,12 @@ async def welcome():
 
 
 @router.get('/users', status_code=status.HTTP_200_OK, tags=["Users"])
-async def index(db: Session = Depends(get_db)):
+async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     return UserRepository(db).index()
 
 
 @router.post('/users', tags=["Users"])
-async def create(user: UserSchema, db: Session = Depends(get_db)):
+async def create(user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
     # Verify has user by phone
 
     # Create new user
@@ -36,13 +38,13 @@ async def create(user: UserSchema, db: Session = Depends(get_db)):
 
 
 @router.put('/users/{id}', tags=["Users"])
-async def update(id: int, user: UserSchema, db: Session = Depends(get_db)):
+async def update(id: int, user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
     user_updated = UserRepository(db).update(id, user)
     return user
 
 
 @router.get('/users/{user_id}', tags=["Users"])
-async def show(user_id: int, db: Session = Depends(get_db)):
+async def show(user_id: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     try:
         user_found = UserRepository(db).show(user_id)
         return user_found
@@ -52,7 +54,7 @@ async def show(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.get('/users/document/{document}', tags=["Users"])
-async def searchDocument(document: str, db: Session = Depends(get_db)):
+async def searchDocument(document: str, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     user_found = UserRepository(db).searchDocument(document)
     return user_found
 
@@ -64,6 +66,6 @@ async def searchEmail(email: str, db: Session = Depends(get_db)):
 
 
 @router.delete('/users/{user_id}', tags=["Users"])
-async def destroy(user_id: int, db: Session = Depends(get_db)):
+async def destroy(user_id: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     UserRepository(db).destroy(user_id)
     return {'message': 'Usuário removido com sucesso.'}

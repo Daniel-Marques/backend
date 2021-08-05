@@ -34,6 +34,8 @@ class LoginSchema(BaseModel):
     password: str
 
 
+
+
 class LoginSuccessSchema(BaseModel):
     user: UserSimpleSchema
     access_token: str
