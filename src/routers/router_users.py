@@ -47,8 +47,8 @@ async def update(id: int, user: UserSchema, db: Session = Depends(get_db), userA
         user.password = user_search.password
     else:
         user.password = hash_provider.create_hash(user.password)
-    user_updated = UserRepository(db).update(id, user)
-    return user_updated
+    print(user)
+    return UserRepository(db).update(id, user)
 
 
 @router.get('/users/{user_id}', tags=["Users"])
