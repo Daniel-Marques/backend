@@ -68,8 +68,22 @@ class UserRepository():
         return {'message': 'Usuário atualizado com sucesso.'}
 
     def show(self, user_id: int):
-        stmt = select(UserModel).where(UserModel.id == user_id)
-        user = self.db.execute(stmt).scalars().first()
+        stmt = select(
+            UserModel.id,
+            UserModel.email,
+            UserModel.pis,
+            UserModel.zipcode,
+            UserModel.number,
+            UserModel.city,
+            UserModel.country,
+            UserModel.updated_at,
+            UserModel.name,
+            UserModel.document,
+            UserModel.address,
+            UserModel.complement,
+            UserModel.state,
+            UserModel.created_at).where(UserModel.id == user_id)
+        user = self.db.execute(stmt).first()
         return user
 
     def searchDocument(self, document: str):
