@@ -47,7 +47,7 @@ class UserRepository():
         self.db.commit()
         self.db.refresh(db_user)
 
-        # Send hide pass
+        # Alternative to hide pass
         stmt = select(
             UserModel.id,
             UserModel.email,
