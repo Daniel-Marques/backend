@@ -104,6 +104,11 @@ class UserRepository():
         user = self.db.execute(stmt).first()
         return user
 
+    def getUser(self, id: str):
+        stmt = select(UserModel).where(UserModel.id == id)
+        user = self.db.execute(stmt).scalars().first()
+        return user
+
     def searchDocument(self, document: str):
         stmt = select(UserModel).where(UserModel.document == document)
         user = self.db.execute(stmt).scalars().first()

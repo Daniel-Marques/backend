@@ -40,11 +40,12 @@ async def create(user: UserSchema, db: Session = Depends(get_db), userAuth: User
 
 
 @router.put('/users/{id}', tags=["Users"])
-async def update(id: int, user: UserWithoutPasswordSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
-    user_search = UserRepository(db).show(id)
+async def update(id: int, user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
+    user_search = UserRepository(db).getUser(id)
 
     if(user.password is None):
         user.password = user_search.password
+        return user
     else:
         user.password = hash_provider.create_hash(user.password)
     user_updated = UserRepository(db).update(id, user)
