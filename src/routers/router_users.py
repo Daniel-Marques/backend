@@ -48,7 +48,7 @@ async def update(id: int, user: UserWithoutPasswordSchema, db: Session = Depends
     else:
         user.password = hash_provider.create_hash(user.password)
     user_updated = UserRepository(db).update(id, user)
-    return UserRepository(db).show(id)
+    return user
 
 
 @router.get('/users/{user_id}', tags=["Users"])
