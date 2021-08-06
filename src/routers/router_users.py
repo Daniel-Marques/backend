@@ -23,9 +23,9 @@ async def welcome():
     }}
 
 
-@router.get('/users', tags=["Users"])
-async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
-    user_list = UserRepository(db).index()
+@router.get('/users/{id_exclude}', tags=["Users"])
+async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
+    user_list = UserRepository(db).index(id_exclude)
     return user_list
 
 

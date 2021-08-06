@@ -1,6 +1,5 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
-from sqlalchemy.sql.expression import true
 from src.schemas.schema import UserSchema
 from src.infra.sqlalchemy.models.user_model import UserModel
 
@@ -9,7 +8,7 @@ class UserRepository():
     def __init__(self, db: Session):
         self.db = db
 
-    def index(self):
+    def index(self, id_exclude: int):
         stmt = select(
             UserModel.id,
             UserModel.email,
@@ -24,7 +23,7 @@ class UserRepository():
             UserModel.address,
             UserModel.complement,
             UserModel.state,
-            UserModel.created_at)
+            UserModel.created_at).where(UserModel.id != id_exclude)
         users = self.db.execute(stmt).all()
         return users
 
