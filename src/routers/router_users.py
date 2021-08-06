@@ -23,7 +23,12 @@ async def welcome():
     }}
 
 
-@router.get('/users/{id_exclude}', tags=["Users"])
+@router.get('/users', tags=["Users"])
+async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
+    user_list = UserRepository(db).index()
+    return user_list
+
+@router.get('/users/withoutCurrentUser/{id_exclude}', tags=["Users"])
 async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     user_list = UserRepository(db).index(id_exclude)
     return user_list
@@ -47,7 +52,6 @@ async def update(id: int, user: UserSchema, db: Session = Depends(get_db), userA
         user.password = user_search.password
     else:
         user.password = hash_provider.create_hash(user.password)
-    print(user)
     return UserRepository(db).update(id, user)
 
 
