@@ -8,7 +8,26 @@ class UserRepository():
     def __init__(self, db: Session):
         self.db = db
 
-    def index(self, id_exclude: int):
+    def index(self):
+        stmt = select(
+            UserModel.id,
+            UserModel.email,
+            UserModel.pis,
+            UserModel.zipcode,
+            UserModel.number,
+            UserModel.city,
+            UserModel.country,
+            UserModel.updated_at,
+            UserModel.name,
+            UserModel.document,
+            UserModel.address,
+            UserModel.complement,
+            UserModel.state,
+            UserModel.created_at)
+        users = self.db.execute(stmt).all()
+        return users
+
+    def indexInitial(self, id_exclude: int):
         stmt = select(
             UserModel.id,
             UserModel.email,

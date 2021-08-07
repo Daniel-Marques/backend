@@ -27,7 +27,7 @@ def login(login: LoginSchema, session: Session = Depends(get_db)):
                             detail="A senha está incorreta")
 
     # Gererate Token JWT
-    token = token_provider.create_access_token({'sub': user.email})
+    token = token_provider.create_access_token({"sub": user.email})
     return LoginSuccessSchema(user=user, access_token=token)
 
 

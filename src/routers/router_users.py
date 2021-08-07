@@ -30,7 +30,7 @@ async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_use
 
 @router.get('/users/withoutCurrentUser/{id_exclude}', tags=["Users"])
 async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
-    user_list = UserRepository(db).index(id_exclude)
+    user_list = UserRepository(db).indexInitial(id_exclude)
     return user_list
 
 
