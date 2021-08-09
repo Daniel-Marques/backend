@@ -28,6 +28,7 @@ async def index(db: Session = Depends(get_db), user: UserModel = Depends(get_use
     user_list = UserRepository(db).index()
     return user_list
 
+
 @router.get('/users/withoutCurrentUser/{id_exclude}', tags=["Users"])
 async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
     user_list = UserRepository(db).indexInitial(id_exclude)
@@ -36,7 +37,13 @@ async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel 
 
 @router.post('/users', tags=["Users"])
 async def create(user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
-    # Verify has user by phone
+    email = user.email
+
+    # Verify has user by email
+    userSearch = UserRepository(db).searchEmail(email)
+    if userSearch:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="E-mail não existe em nossa base.")
 
     # Create new user
     user.password = hash_provider.create_hash(user.password)
