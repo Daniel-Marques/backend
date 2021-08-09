@@ -1,5 +1,5 @@
 from datetime import datetime, time, timezone
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from src.infra.sqlalchemy.config.database import Base, create_db
 
 class UserModel(Base):
@@ -19,5 +19,6 @@ class UserModel(Base):
     city = Column(String)
     state = Column(String)
     country = Column(String)
+    signin_social = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True))

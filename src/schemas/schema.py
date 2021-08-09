@@ -16,6 +16,7 @@ class UserSchema(BaseModel):
     city: str
     state: str
     country: str
+    signin_social: Optional[bool]
     created_at: Optional[str]
     updated_at: Optional[str]
 
@@ -91,6 +92,7 @@ class UserSignupSchema(BaseModel):
     country: Optional[str]
     created_at: Optional[str]
     updated_at: Optional[str]
+
 
 class SignupSuccessSchema(BaseModel):
     user: UserSimpleSchema
