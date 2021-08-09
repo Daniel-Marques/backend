@@ -38,14 +38,22 @@ async def index(id_exclude: int, db: Session = Depends(get_db), user: UserModel 
 @router.post('/users', tags=["Users"])
 async def create(user: UserSchema, db: Session = Depends(get_db), userAuth: UserModel = Depends(get_user_loggedin)):
     email = user.email
+    document = user.document
+
+    # Verify has user by document
+    userDocument = UserRepository(db).searchDocument(document)
+    if userDocument:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="CPF já cadastrado, verifica os dados.")
 
     # Verify has user by email
-    userSearch = UserRepository(db).searchEmail(email)
+    userSearch = UserRepository(db).searchEmail(email.lower())
     if userSearch:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Um usuário já está usando esse e-mail, tente um outro 😉")
 
     # Create new user
+    user.email = email.lower()
     user.password = hash_provider.create_hash(user.password)
     user_created = UserRepository(db).create(user)
     return user_created

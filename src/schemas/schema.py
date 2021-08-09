@@ -11,7 +11,7 @@ class UserSchema(BaseModel):
     password: Optional[str]
     zipcode: int
     address: str
-    number: Optional[int]
+    number: Optional[str]
     complement: Optional[str]
     city: str
     state: str
@@ -30,7 +30,7 @@ class UserWithoutPasswordSchema(BaseModel):
     password: Optional[str]
     zipcode: int
     address: str
-    number: Optional[int]
+    number: Optional[str]
     complement: Optional[str]
     city: str
     state: str
@@ -48,7 +48,7 @@ class UserOut(BaseModel):
     password: Optional[str]
     zipcode: int
     address: str
-    number: Optional[int]
+    number: Optional[str]
     complement: Optional[str]
     city: str
     state: str
@@ -85,7 +85,7 @@ class UserSignupSchema(BaseModel):
     password: str
     zipcode: Optional[int]
     address: Optional[str]
-    number: Optional[int]
+    number: Optional[str]
     complement: Optional[str]
     city: Optional[str]
     state: Optional[str]

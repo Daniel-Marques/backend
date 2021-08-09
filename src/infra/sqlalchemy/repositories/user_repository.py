@@ -130,10 +130,15 @@ class UserRepository():
     def searchDocument(self, document: str):
         stmt = select(UserModel).where(UserModel.document == document)
         user = self.db.execute(stmt).scalars().first()
-        if(user):
-            return True
-        else:
-            return False
+        return user
+
+    # def searchDocument(self, document: str):
+    #     stmt = select(UserModel).where(UserModel.document == document)
+    #     user = self.db.execute(stmt).scalars().first()
+    #     if(user):
+    #         return True
+    #     else:
+    #         return False
 
     def searchEmail(self, email: str) -> UserModel:
         stmt = select(UserModel).where(UserModel.email == email)
