@@ -94,5 +94,8 @@ async def searchEmail(email: str, db: Session = Depends(get_db)):
 
 @router.delete('/users/{user_id}', tags=["Users"])
 async def destroy(user_id: int, db: Session = Depends(get_db), user: UserModel = Depends(get_user_loggedin)):
+    if(user == 2):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Esse usuário não pode ser deleatado')
+
     UserRepository(db).destroy(user_id)
     return {'message': 'Usuário removido com sucesso.'}
