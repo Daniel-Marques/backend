@@ -75,6 +75,16 @@ class LoginSuccessSchema(BaseModel):
     user: UserSimpleSchema
     access_token: str
 
+class LoginGoogleSchema(BaseModel):
+    name: str
+    email: str
+
+class LoginGoogleSuccessSchema(BaseModel):
+    id: int
+    name: str
+    email: str
+    access_token: str
+
 
 class UserSignupSchema(BaseModel):
     id: Optional[str]
@@ -97,3 +107,20 @@ class UserSignupSchema(BaseModel):
 class SignupSuccessSchema(BaseModel):
     user: UserSimpleSchema
     access_token: str
+
+class UserSignupGoogleSchema(BaseModel):
+    id: Optional[str]
+    name: str
+    document: Optional[str]
+    pis: Optional[str]
+    email: str
+    password: Optional[str]
+    zipcode: Optional[int]
+    address: Optional[str]
+    number: Optional[str]
+    complement: Optional[str]
+    city: Optional[str]
+    state: Optional[str]
+    country: Optional[str]
+    created_at: Optional[str]
+    updated_at: Optional[str]
